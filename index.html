@@ -183,7 +183,6 @@
 
     // 初始化密码锁
     function initPasswordLock() {
-        const loveTreePwd = '412'; // 设置正确密码
         let inputPassword = '';
         const passwordDisplay = document.getElementById('passwordDisplay');
         const messageEl = document.getElementById('message');
@@ -201,7 +200,7 @@
                     messageEl.textContent = '';
                 } else if (value === 'enter') {
                     // 确认输入
-                    if (inputPassword === loveTreePwd) {
+                    if (inputPassword === "412" || inputPassword === "0412" ) {
                         messageEl.textContent = '爱心密码正确！即将跳转...';
                         setTimeout(() => {
                             window.location.href = 'LoveTree/index.html'; // 跳转到目标页面
@@ -209,20 +208,30 @@
                     } else if (inputPassword === "520") {
                         messageEl.textContent = '爱心密码正确?即将跳转...';
                         setTimeout(() => {
-                            window.location.href = 'love.html'; // 跳转到目标页面
+                            window.location.href = 'sub/love.html'; // 跳转到目标页面
                         }, 500);
                     } else if (inputPassword === "1314") {
                         messageEl.textContent = '爱心密码正确? 即将跳转...';
                         setTimeout(() => {
-                            window.location.href = 'love.html'; // 跳转到目标页面
+                            window.location.href = 'sub/love.html'; // 跳转到目标页面
                         }, 500);
-                    } else {
-                        messageEl.textContent = '密码错误，请重试';
+                    } else if (inputPassword === "0223" || inputPassword === "223") {
+                        messageEl.textContent = '爱心密码正确? 即将跳转...';
+                        setTimeout(() => {
+                            window.location.href = 'sub/mybirthday.html'; // 跳转到目标页面
+                        }, 500);
+                    }else if (inputPassword === "0507" || inputPassword === "507") {
+                        messageEl.textContent = '爱心密码正确? 即将跳转...';
+                        setTimeout(() => {
+                            window.location.href = 'sub/herbirthday.html'; // 跳转到目标页面
+                        }, 500);
+                    }else {
+                        messageEl.textContent = '未能匹配到这个密码噢，请重试';
                         setTimeout(() => {
                             inputPassword = '';
                             passwordDisplay.textContent = '';
                             messageEl.textContent = '';
-                        }, 500);
+                        }, 800);
                     }
                 } else {
                     // 数字输入
