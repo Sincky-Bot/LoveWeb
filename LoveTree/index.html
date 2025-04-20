@@ -265,14 +265,16 @@
             img.src = tree.toDataURL('image/png')
         }));
 
+        function drawTreeJump(){
+            tree.ctx.clearRect(0, 0, width, height);
+            tree.ctx.drawImage(img, 0 ,0)
+            tree.jump();
+            foot.draw();
+        }
 
         var jumpAnimate = eval(Jscex.compile("async", function () {
-            var ctx = tree.ctx;
             while (true) {
-                tree.ctx.clearRect(0, 0, width, height);
-                tree.ctx.drawImage(img, 0 ,0)
-                tree.jump();
-                foot.draw();
+                requestAnimationFrame(drawTreeJump)
                 $await(Jscex.Async.sleep(25));
             }
         }));
