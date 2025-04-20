@@ -524,14 +524,11 @@
 
             if (s.point.x < 0 || s.point.y > height) {
                 s.tree.removeBloom(s);
-                console.log("removeBloom")
             } else {
                 s.draw();
                 s.point = s.place.sub(s.point).div(s.speed).add(s.point);
                 s.angle += 0.05;
                 s.speed -= 1;
-                console.log("bloom point"+ s.point.x + " , " + s.point.y)
-
             }
         }
     }
