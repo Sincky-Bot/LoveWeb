@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="localWeb" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="localWeb">
+        <serverdata>
+          <mappings>
+            <mapping deploy="\LoveWeb" local="$PROJECT_DIR$" web="/LoveWeb" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

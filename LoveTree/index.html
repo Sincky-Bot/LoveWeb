@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love</title>
+
+    <link type="text/css" rel="stylesheet" href="./index_files/default.css">
+    <script type="text/javascript" src="./index_files/jquery.min.js"></script>
+    <script type="text/javascript" src="./index_files/jscex.min.js"></script>
+    <script type="text/javascript" src="./index_files/jscex-parser.js"></script>
+    <script type="text/javascript" src="./index_files/jscex-jit.js"></script>
+    <script type="text/javascript" src="./index_files/jscex-builderbase.min.js"></script>
+    <script type="text/javascript" src="./index_files/jscex-async.min.js"></script>
+    <script type="text/javascript" src="./index_files/jscex-async-powerpack.min.js"></script>
+    <script type="text/javascript" src="./index_files/functions.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./index_files/love.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./config.js"></script>
+</head>
+<body>
+
+<img class="rotateImages" src="./index_files/music.png" style="position: fixed;z-index: 10001;top:10px;right:10px;"
+     onclick="let m = document.querySelector('.song-audio-autoplay'); if (m.paused ) {m.play(); this.className = 'rotateImages'} else {m.pause(); this.className = ''}">
+<audio class="song-audio-autoplay" autoplay controls loop  style="display: none;visibility: hidden">
+    <source src="./index_files/music.mp3" type="audio/mp3"/>
+</audio>
+
+
+<style type="text/css">
+    .rotateImages{
+        -webkit-animation:myRotate 10s linear infinite;
+        animation:myRotate 10s linear infinite;
+    }
+    @-webkit-keyframes myRotate{
+        0%{ -webkit-transform: rotate(0deg);}
+        50%{ -webkit-transform: rotate(180deg);}
+        100%{ -webkit-transform: rotate(360deg);}
+    }
+    @keyframes myRotate{
+        0%{ -webkit-transform: rotate(0deg);}
+        50%{ -webkit-transform: rotate(180deg);}
+        100%{ -webkit-transform: rotate(360deg);}
+    }
+</style>
+
+<div id="main">
+    <div id="error">本页面采用HTML5编辑，目前您的浏览器无法显示，请换成谷歌(<a
+            href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>)或者火狐(<a
+            href="http://firefox.com.cn/download/">Firefox</a>)浏览器，或者其他游览器的最新版本。
+    </div>
+    <div id="wrap">
+        <canvas id="canvas"></canvas>
+        <div id="text">
+            <div id="clock-box">
+                    <span id="clock-box-inside-text">
+					</span>
+                <div id="clock"></div>
+            </div>
+            <div id="code">
+            </div>
+        </div>
+        <div id="image-list">
+<!--            <img src="index_files/img/love.jpg" alt=""/>-->
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $('#code').html(config.lines.map(item => {
+        return `<span class="say">${item}</span><br>
+						<span class="say"> </span><br>`
+    }).reduce((a, b) => {
+        return a + b;
+    }))
+    $("#clock-box-inside-text").html(`${config.names[0]}
+            <span class="STYLE1"> 与</span> ${config.names[1]}<span class="STYLE1"> 已经相恋💕了 </span>`)
+</script>
+
+<script>
+    (function () {
+        var canvasContainer = $('#canvas');
+        var container = $('#main');
+
+        // 动态设置canvas大小
+        function resizeCanvas() {
+            var width = container.width();
+            var height = container.height();
+            canvasContainer[0].width = width;
+            canvasContainer[0].height = height;
+
+            return { canvas: canvasContainer[0], width: width, height: height };
+        }
+
+        var canvasData = resizeCanvas();
+        var canvas = canvasData.canvas;
+        var width = canvasData.width;
+        var height = canvasData.height;
+
+        if (!canvas.getContext) {
+            $("#error").show();
+            return false;
+        }
+        // 调整种子位置为屏幕中央
+        var opts = {
+            seed: {
+                x: width / 2 ,
+                color: "rgb(190, 26, 37)",
+                scale: 2
+            },
+            branch: [
+                [width / 2, height, width / 2 + 35, height / 3, width / 2 - 65, height / 3.4,
+                    30,
+                    100,
+                    [
+                        [width / 2 + 5, height / 1.36, width / 2 - 80, height / 1.63, width / 2 - 100, height / 1.7,
+                            13,
+                            100,
+                            [
+                                [width / 2 - 70, height / 1.56, width / 2 - 106, height / 1.57, width / 2 - 120, height / 1.56,
+                                    2,
+                                    40
+                                ]
+                            ]
+                        ],
+                        [width / 2 + 10, height / 1.52, width / 2 + 60, height / 1.92, width / 2 + 140, height / 1.97,
+                            12,
+                            100,
+                            [
+                                [width / 2 + 38, height / 1.7, width / 2 + 108, height / 1.74, width / 2 + 121, height / 1.77,
+                                    3,
+                                    80
+                                ]
+                            ]
+                        ],
+                        [width / 2 + 6, height / 1.71, width / 2 - 133, height / 2.95, width / 2 - 150, height / 2.6,
+                            9,
+                            80,
+                            [
+                                [width / 2 - 72, height / 2.2, width / 2 - 80, height / 2.4, width / 2 - 110, height / 3.0,
+                                    4,
+                                    50
+                                ],
+                                [width / 2 - 48, height / 1.96, width / 2 - 111, height / 2.18, width / 2 - 151, height / 2.06,
+                                    4,
+                                    60
+                                ]
+                            ]
+                        ],
+                        [width / 2 + 6, height / 1.82, width / 2 + 50, height / 2.94, width / 2 + 138, height / 3.08,
+                            6,
+                            100,
+                            [
+                                [width / 2 + 41, height / 2.25, width / 2 + 106, height / 2.43, width / 2 + 108, height / 2.49,
+                                    2,
+                                    80
+                                ]
+                            ]
+                        ],
+                        [width / 2 - 1, height / 2.3, width / 2 - 3, height / 2.85, width / 2 - 6, height / 3.13,
+                            3,
+                            40
+                        ]
+                    ]
+                ]
+            ],
+            bloom: {
+                num: 520,
+                width: width,
+                height: height,
+            },
+            footer: {
+                width: width,
+                height: 5,
+                speed: 10,
+            }
+        }
+
+        // 响应式调整
+        /*$(window).resize(function() {
+            var newSize = resizeCanvas();
+            width = newSize.width;
+            height = newSize.height;
+
+            // 更新树的位置和大小
+            opts.seed.x = width / 2 - 20;
+            opts.bloom.width = width;
+            opts.bloom.height = height;
+            opts.footer.width = width;
+
+            tree.resize(width, height);
+        });*/
+
+        var tree = new Tree(canvas, width, height, opts);
+        var seed = tree.seed;
+        var foot = tree.footer;
+        var hold = 1;
+
+
+        var wrap = $('#wrap');
+
+
+        wrap.on('click', function(e) {
+            e.preventDefault();
+            hold = 0;
+            console.log("click!")
+            wrap.off('click touchstart');
+            wrap.off('mousemove touchmove');
+            let m = document.querySelector('.song-audio-autoplay');
+            m.play();
+        })
+        /*
+        canvasContainer.click(function (e) {
+            var offset = canvasContainer.offset(), x, y;
+            x = e.pageX - offset.left;
+            y = e.pageY - offset.top;
+
+            hold = 0;
+            canvasContainer.unbind("click");
+            canvasContainer.unbind("mousemove");
+            canvasContainer.removeClass('hand');
+
+            let m = document.querySelector('.song-audio-autoplay');
+            m.play();
+
+        })*/
+
+        var seedAnimate = eval(Jscex.compile("async", function () {
+            seed.draw();
+            while (hold) {
+                $await(Jscex.Async.sleep(10));
+            }
+            while (seed.canScale()) {
+                seed.scale(0.95);
+                $await(Jscex.Async.sleep(10));
+            }
+            while (seed.canMove()) {
+                seed.move(0, 2);
+                foot.draw();
+                $await(Jscex.Async.sleep(10));
+            }
+        }));
+
+        var growAnimate = eval(Jscex.compile("async", function () {
+            do {
+                tree.grow();
+                $await(Jscex.Async.sleep(10));
+            } while (tree.canGrow());
+        }));
+
+        var flowAnimate = eval(Jscex.compile("async", function () {
+            do {
+                tree.flower(3);
+                $await(Jscex.Async.sleep(10));
+            } while (tree.canFlower());
+        }));
+
+        var img = new Image();
+
+        var moveAnimate = eval(Jscex.compile("async", function () {
+            tree.snapshot("p1", 0, 0, width, height);
+            // 会有闪烁不得意这样做, (＞﹏＜)
+            img.src = tree.toDataURL('image/png')
+        }));
+
+
+        var jumpAnimate = eval(Jscex.compile("async", function () {
+            var ctx = tree.ctx;
+            while (true) {
+                tree.ctx.clearRect(0, 0, width, height);
+                tree.ctx.drawImage(img, 0 ,0)
+                tree.jump();
+                foot.draw();
+                $await(Jscex.Async.sleep(25));
+            }
+        }));
+
+        var textAnimate = eval(Jscex.compile("async", function () {
+            var together = new Date(config.date);
+
+            $("#code").show().typewriter();
+            $("#clock-box").fadeIn(500);
+            while (true) {
+                timeElapse(together);
+                $await(Jscex.Async.sleep(1000));
+            }
+        }));
+
+
+        var runAsync = eval(Jscex.compile("async", function () {
+            $await(seedAnimate());
+            $await(growAnimate());
+            textAnimate().start();
+            $await(flowAnimate());
+            $await(moveAnimate());
+            $await(jumpAnimate());
+        }));
+
+        runAsync().start();
+    })();
+</script>
+
+
+</body>
+</html>

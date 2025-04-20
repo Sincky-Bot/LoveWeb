@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6e8ece8f-1aa5-4afb-801c-69902bb89d6c" name="localWeb" url="http://192.168.31.132:8080">
+        <fileTransfer mountedRoot="E:\Code\Projects\Web\LoveWeb" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

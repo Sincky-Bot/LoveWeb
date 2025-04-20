@@ -1,0 +1,37 @@
+body{
+    background: #f8bbd0;
+    font-size:14px;font-family:'微软雅黑','宋体',sans-serif;color:#231F20;overflow:auto;
+    argin: 0;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+a {color:#000;font-size:14px;}
+#main{height: 100vh;
+    width: 100vw;}
+#wrap{  }
+
+#text{margin:5px;position:absolute;text-shadow: 2px 2px 5px #ff4081; width: 95%; height: 95%}
+#code{display:none;font-size:16px;margin-top: 10px; color: #ffffff}
+#clock-box {position: fixed;
+    bottom: 20px;
+    left: 10px;
+    width: 100%;font-size:18px;display:none; text-align: left}
+#clock-box a {font-size:18px;text-decoration:none;}
+#image-list {position:absolute;}
+
+#clock{color:#ff4081}
+#clock .digit {font-size:32px;}
+#clock-box-inside-text{color:#e91e63;font-size:26px;}
+
+#canvas{position:absolute;margin:0 auto; width: 100%;height: 100%;}
+#error{margin:0 auto;text-align:center;margin-top:60px;display:none;}
+.hand{cursor:pointer;}
+.say{margin-left:5px;}
+.space{margin-right:150px;}
+.STYLE1 {
+    color: #ffebee; font-size:18px;
+}
