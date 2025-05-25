@@ -204,56 +204,34 @@
                         messageEl.textContent = '爱心密码正确！即将跳转...';
                         setTimeout(() => {
                             window.location.href = 'LoveTree/index.html'; // 跳转到目标页面
-                        }, 500);
-                    } else if (inputPassword === "520") {
+                        }, 200);
+                    } else if (inputPassword === "520" || inputPassword === "1314" || inputPassword === "5201314") {
                         messageEl.textContent = '爱心密码正确?即将跳转...';
                         setTimeout(() => {
                             window.location.href = 'sub/love.html'; // 跳转到目标页面
-                        }, 500);
-                    } else if (inputPassword === "1314") {
-                        messageEl.textContent = '爱心密码正确? 即将跳转...';
-                        setTimeout(() => {
-                            window.location.href = 'sub/love.html'; // 跳转到目标页面
-                        }, 500);
+                        }, 200);
                     } else if (inputPassword === "0223" || inputPassword === "223") {
                         messageEl.textContent = '爱心密码正确? 即将跳转...';
                         setTimeout(() => {
                             window.location.href = 'sub/mybirthday.html'; // 跳转到目标页面
-                        }, 500);
+                        }, 200);
                     }else if (inputPassword === "0507" || inputPassword === "507") {
                         messageEl.textContent = '爱心密码正确? 即将跳转...';
                         setTimeout(() => {
                             window.location.href = 'sub/herbirthday.html'; // 跳转到目标页面
-                        }, 500);
+                        }, 200);
                     }else {
                         messageEl.textContent = '未能匹配到这个密码噢，请重试';
                         setTimeout(() => {
                             inputPassword = '';
                             passwordDisplay.textContent = '';
                             messageEl.textContent = '';
-                        }, 800);
+                        }, 500);
                     }
                 } else {
                     // 数字输入
                     inputPassword += value;
                     passwordDisplay.textContent = inputPassword;
-
-                    // 自动检查密码长度
-                    /*if (inputPassword.length === correctPassword.length) {
-                        if (inputPassword === correctPassword) {
-                            messageEl.textContent = '密码正确！即将跳转...';
-                            setTimeout(() => {
-                                window.location.href = 'love.html';
-                            }, 1000);
-                        } else {
-                            messageEl.textContent = '密码错误，请重试';
-                            setTimeout(() => {
-                                inputPassword = '';
-                                passwordDisplay.textContent = '';
-                                messageEl.textContent = '';
-                            }, 1000);
-                        }
-                    }*/
                 }
             });
         });

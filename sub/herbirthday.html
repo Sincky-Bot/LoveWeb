@@ -103,6 +103,31 @@
         .btn:active {
             transform: scale(0.95);
         }
+
+        .birthday-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e91e63;
+            margin: 20px 0;
+            animation: colorChange 2s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            from { color: #e91e63; }
+            to { color: #ff4081; }
+        }
+
+        .countdown {
+            font-size: 20px;
+            color: #ff4081;
+            margin: 20px 0;
+        }
+
+        .birthday-date {
+            font-size: 16px;
+            color: #888;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -110,7 +135,9 @@
     <div class="big-heart">❤</div>
     <h1>欢迎来到爱的世界</h1>
     <p>你的生日我记得噢~</p>
-    <p>不过这个页面正在施工噢~ 请稍后再来</p>
+    <div id="birthdayInfo">
+        <p>正在检查生日日期...</p>
+    </div>
     <a href="../index.html" class="btn">返回密码锁</a>
 </div>
 
@@ -132,9 +159,103 @@
         }
     }
 
+    // 生日日期数组（请替换为实际的生日日期）
+    const birthdayDates = [
+        "2025-06-02",
+        "2026-06-21",
+        "2027-06-11",
+        "2028-05-30",
+        "2029-06-18",
+        "2030-06-07",
+        // 可以添加更多日期...
+    ];
+
+    // 检查是否是生日
+    function checkBirthday() {
+        const today = new Date();
+        const currentDateStr = formatDate(today);
+
+        // 检查今天是否是生日
+        const isBirthday = birthdayDates.some(date => date === currentDateStr);
+
+        if (isBirthday) {
+            return {
+                isBirthday: true,
+                message: "宝子，生日快乐！🎉🎂",
+                description: "今天是你的特别日子，愿所有的幸福都围绕着你！",
+                nextBirthday: null
+            };
+        }
+
+        // 如果不是生日，计算下一个生日
+        const nextBirthday = findNextBirthday(today);
+        const daysLeft = calculateDaysDifference(today, nextBirthday);
+
+        return {
+            isBirthday: false,
+            message: `距离你的生日还有 ${daysLeft} 天啦`,
+            description: "每天都要开开心心的~",
+            nextBirthday: nextBirthday
+        };
+    }
+
+    // 格式化日期为YYYY-MM-DD
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // 找到下一个生日日期
+    function findNextBirthday(currentDate) {
+        const currentYear = currentDate.getFullYear();
+
+        // 尝试找到今年还未过的生日
+        for (const dateStr of birthdayDates) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const birthdayThisYear = new Date(currentYear, month - 1, day);
+
+            if (birthdayThisYear > currentDate) {
+                return birthdayThisYear;
+            }
+        }
+
+        // 如果今年所有生日都过了，返回明年的第一个生日
+        const [year, month, day] = birthdayDates[0].split('-').map(Number);
+        return new Date(currentYear + 1, month - 1, day);
+    }
+
+    // 计算两个日期之间的天数差
+    function calculateDaysDifference(date1, date2) {
+        const diffTime = date2 - date1;
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    // 更新生日信息显示
+    function updateBirthdayInfo() {
+        const birthdayData = checkBirthday();
+        const birthdayInfo = document.getElementById('birthdayInfo');
+
+        if (birthdayData.isBirthday) {
+            birthdayInfo.innerHTML = `
+                <div class="birthday-message">${birthdayData.message}</div>
+                <p>${birthdayData.description}</p>
+                <img src="assets/we.jpg" height="100%" width="100%">
+            `;
+        } else {
+            birthdayInfo.innerHTML = `
+                <div class="countdown">${birthdayData.message}</div>
+                <p>${birthdayData.description}</p>
+<!--                <div class="birthday-date">下一个生日: ${formatDate(birthdayData.nextBirthday)}</div>-->
+            `;
+        }
+    }
+
     // 页面加载完成后初始化
     window.addEventListener('DOMContentLoaded', () => {
         createHearts();
+        updateBirthdayInfo();
     });
 </script>
 </body>

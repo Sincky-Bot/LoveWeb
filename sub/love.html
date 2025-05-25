@@ -48,7 +48,7 @@
             margin-bottom: 20px;
         }
 
-        .heart {
+        .heart_float {
             position: absolute;
             font-size: 24px;
             color: #ff4081;
@@ -103,29 +103,173 @@
         .btn:active {
             transform: scale(0.95);
         }
+
+        .heart-container {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .heart-row {
+            display: block;
+            height: 24px;
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        .heart {
+            display: inline-block;
+            font-size: 20px;
+            color: #ff4081;
+            animation: beat 1.2s infinite;
+            transform-origin: center;
+            text-shadow: 0 0 5px rgba(255, 64, 129, 0.5);
+            width: 24px;
+            height: 24px;
+            text-align: center;
+        }
+
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        .empty {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="big-heart">❤</div>
     <h1>欢迎来到爱的世界</h1>
-    <p>爱你~愿这份心意能传递到你心里</p>
-    <p>不过这个页面正在施工噢~ 请稍后再来</p>
-    <a href="../index.html" class="btn">返回密码锁</a>
+    <p>爱你，送你一颗跳动的心</p>
+    <div class="heart-container" id="heartContainer"></div>
+    <p>   <a href="../index.html" class="btn">返回密码锁</a></p>
+
+
+    <script>
+        // 创建心形图案
+        const heartContainer = document.getElementById('heartContainer');
+
+        // 修正后的心形图案矩阵 (1表示显示心，0表示空白)
+        const heartPattern = [
+            [0, 1, 1, 0, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 0],
+            [0, 0, 1, 1, 1, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0]
+        ];
+
+        // 计算中心位置
+        const centerX = Math.floor(heartPattern[0].length / 2);
+        const centerY = Math.floor(heartPattern.length / 2);
+
+        // 根据设备宽度调整心的大小
+        function adjustHeartSize() {
+            const screenWidth = window.innerWidth;
+            const baseSize = Math.max(12, Math.min(24, screenWidth / 15));
+            const heartSize = Math.max(20, Math.min(30, screenWidth / 10));
+
+            document.querySelectorAll('.heart').forEach(heart => {
+                heart.style.fontSize = `${baseSize}px`;
+                heart.style.width = `${heartSize}px`;
+                heart.style.height = `${heartSize}px`;
+            });
+
+            document.querySelectorAll('.empty').forEach(empty => {
+                empty.style.width = `${heartSize}px`;
+                empty.style.height = `${heartSize}px`;
+            });
+
+            document.querySelectorAll('.heart-row').forEach(row => {
+                row.style.height = `${heartSize}px`;
+                row.style.lineHeight = `${heartSize}px`;
+            });
+        }
+
+        // 计算距离中心的欧几里得距离
+        function getDistanceFromCenter(x, y) {
+            const dx = x - centerX;
+            const dy = y - centerY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        // 创建心形
+        function createHeart() {
+            heartContainer.innerHTML = '';
+
+            // 找到最大距离
+            let maxDistance = 0;
+            heartPattern.forEach((row, y) => {
+                row.forEach((cell, x) => {
+                    if (cell) {
+                        const distance = getDistanceFromCenter(x, y);
+                        if (distance > maxDistance) maxDistance = distance;
+                    }
+                });
+            });
+
+            heartPattern.forEach((row, y) => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'heart-row';
+
+                row.forEach((cell, x) => {
+                    if (cell) {
+                        const heart = document.createElement('span');
+                        heart.className = 'heart';
+                        heart.textContent = '❤';
+
+                        // 计算距离中心的距离
+                        const distance = getDistanceFromCenter(x, y);
+
+                        // 根据距离设置动画延迟，形成波浪效果
+                        const delay = (distance / maxDistance) * 0.6;
+                        heart.style.animationDelay = `${delay.toFixed(2)}s`;
+
+                        rowDiv.appendChild(heart);
+                    } else {
+                        // 添加空白保持形状
+                        const empty = document.createElement('span');
+                        empty.className = 'empty';
+                        rowDiv.appendChild(empty);
+                    }
+                });
+
+                heartContainer.appendChild(rowDiv);
+            });
+
+            adjustHeartSize();
+        }
+
+        // 初始创建
+        createHeart();
+
+        // 窗口大小改变时调整
+        window.addEventListener('resize', adjustHeartSize);
+    </script>
 </div>
 
 <script>
     // 创建漂浮的爱心
     function createHearts() {
-        const heartCount = 20;
+        const heartCount = 10;
 
         for (let i = 0; i < heartCount; i++) {
             const heart = document.createElement('div');
-            heart.className = 'heart';
+            heart.className = 'heart_float';
             heart.innerHTML = '❤';
+            heart.style.opacity = "0.5"
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.top = Math.random() * 100 + 'vh';
-            heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
             heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
             heart.style.animationDelay = Math.random() * 5 + 's';
             document.body.appendChild(heart);
