@@ -214,7 +214,7 @@
         // 尝试找到今年还未过的生日
         for (const dateStr of birthdayDates) {
             const [year, month, day] = dateStr.split('-').map(Number);
-            const birthdayThisYear = new Date(currentYear, month - 1, day);
+            const birthdayThisYear = new Date(year, month - 1, day);
 
             if (birthdayThisYear > currentDate) {
                 return birthdayThisYear;
